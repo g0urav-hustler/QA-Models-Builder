@@ -1,0 +1,19 @@
+# virtual environment
+qa_env
+env
+
+
+# pycache
+__pycache__
+
+# temporary file
+temp.py
+
+# artifacts
+artifacts
+
+# data
+data
+
+# for personal 
+notes.txt
