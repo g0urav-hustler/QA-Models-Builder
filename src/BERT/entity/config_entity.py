@@ -1,0 +1,9 @@
+from dataclasses import dataclass
+from pathlib import Path
+
+
+@dataclass(frozen=True)
+class DataIngestionConfig:
+    root_dir: Path
+    data_from_web: Path
+    data_collected = Path

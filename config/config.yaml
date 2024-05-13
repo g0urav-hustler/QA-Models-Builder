@@ -3,9 +3,5 @@ artifacts_root: artifacts
 
 data_ingestion:
   root_dir: artifacts/data_uploaded
-  # source_URL: https://github.com/g0urav-hustler/External-Data/raw/main/PCBData.zip
-  # local_data_file: artifacts/data_ingestion/data.zip
-  # unzip_dir: artifacts/data_ingestion
-
-  data_from_web: uploaded_files
-  data_collected: src/BERT/data_file
+  data_from_web: web_files
+  data_collected: src/BERT/data
