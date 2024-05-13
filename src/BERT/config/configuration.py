@@ -16,16 +16,15 @@ class ConfigurationManager:
 
         create_directories([self.config.artifacts_root])
 
-    
     def get_data_ingestion_config(self) -> DataIngestionConfig:
 
         config = self.config.data_ingestion
 
-        create_directories(config.raw_data_dir)
+        create_directories([config.raw_data_dir])
 
         data_ingestion_config = DataIngestionConfig(
-            raw_data_dir= config.root_raw_data_dir
-            data_from_web= config.data_from_web
+            raw_data_dir= config.raw_data_dir,
+            web_data_dir= config.web_data_dir
         )
 
         return data_ingestion_config
