@@ -12,6 +12,9 @@ temp.py
 # artifacts
 artifacts
 
+# logs
+logs
+
 # uploaded_files
 uploaded_files
 
@@ -20,3 +23,5 @@ data
 
 # for personal 
 notes.txt
+
+params.yaml

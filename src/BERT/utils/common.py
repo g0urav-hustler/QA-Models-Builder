@@ -61,7 +61,7 @@ def join_path(current_path: str, add_folder: str) :
     return ResultPath
 
 @ensure_annotations
-def copy_files( files_names : list, source_dir :str, target_dir: str, file_extension):
+def copy_files( files_names : list, source_dir :str, target_dir: str, file_extension = None):
     """Copy files form source dir to target dir
     Args:
         file_names (list): list of files
