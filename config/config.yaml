@@ -2,6 +2,5 @@ artifacts_root: artifacts
 
 
 data_ingestion:
-  root_dir: artifacts/data_uploaded
+  raw_data_dir: artifacts/raw_data
   data_from_web: web_files
-  data_collected: src/BERT/data

@@ -6,4 +6,5 @@ from pathlib import Path
 class DataIngestionConfig:
     root_dir: Path
     data_from_web: Path
-    data_collected = Path
+    
+
