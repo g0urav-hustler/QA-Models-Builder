@@ -1,10 +1,10 @@
 import os
 from src.BERT.utils.common import copy_files
-from src.BERT.config.configuration import DataIngestionConfig
+from src.BERT.entity.config_entity import DataIngestionConfig
 
 
 class DataIngestion():
-    
+
     def __init__(self, config = DataIngestionConfig):
         self.config = config
 
