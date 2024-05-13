@@ -1,10 +1,8 @@
 from dataclasses import dataclass
 from pathlib import Path
 
-
+# creating a data ingesion config class
 @dataclass(frozen=True)
 class DataIngestionConfig:
-    root_dir: Path
-    data_from_web: Path
-    
-
+    raw_data_dir : Path
+    web_data_dir : Path
