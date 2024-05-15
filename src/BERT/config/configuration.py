@@ -1,7 +1,7 @@
 import os
 from src.BERT.constants import *
 from src.BERT.utils.common import read_yaml, create_directories
-from src.BERT.entity.config_entity import DataIngestionConfig
+from src.BERT.entity.config_entity import DataIngestionConfig, DataProcessing
 
 
 class ConfigurationManager:
@@ -28,5 +28,29 @@ class ConfigurationManager:
         )
 
         return data_ingestion_config
+    
+    def get_data_processing_config(self) ->DataProcessing:
+
+        config = self.config.data_processing
+        params = self.params.data_processing
+
+        create_directories([config.processed_data_dir, config.split_data_dir])
+
+        data_processing_config = DataProcessing(
+            raw_data_dir= config.raw_data_dir,
+            processed_data_dir= config.processed_data_dir,
+            split_data_dir= config.split_data_dir,
+
+            context_col= params.context_col,
+            question_col= params.question_col,
+            answer_col= params.answer_col,
+            answer_start_col= params.answer_start_col,
+
+            train_data_size= params.train_data_size,
+            val_data_size= params.val_data_size
+        )
+
+
+        return data_processing_config
     
 
