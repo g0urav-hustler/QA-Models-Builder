@@ -60,13 +60,18 @@ class DataPreprocessing():
     def get_processed_data(self):
 
         data_file = os.listdir(self.config.raw_data_dir)[0]
+        data_file_path = join_path(self.config.raw_data_dir, data_file)
 
-        df = pd.read_csv(data_file, nrows= 10)
+
+        df = pd.read_csv(data_file_path, nrows= 10)
+
 
         context_list = df[self.config.context_col].to_list()
         question_list = df[self.config.question_col].to_list()
         answer_list = df[self.config.answer_col].to_list()
-        answer_start_list = df[self.config.answer_start_col].to_list()
+
+        if self.config.answer_start_col != None:
+            answer_start_list = df[self.config.answer_start_col].to_list()
 
         processed_data = self.create_json_dataset(context_list,question_list, answer_list, answer_start_list)
 
