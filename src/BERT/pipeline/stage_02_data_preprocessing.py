@@ -10,7 +10,7 @@ class DataPreprocessingPipeline():
         pass
     
 
-    def main():
+    def main(self):
         config = ConfigurationManager()
 
         data_processing_config = config.get_data_processing_config()
