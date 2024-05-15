@@ -88,7 +88,7 @@ def copy_files( files_names : list, source_dir :str, target_dir: str, file_exten
         logger.info(f"All files are already in {target_dir}.")
 
 @ensure_annotations
-def save_json(path: Path, data: dict):
+def save_json(path: Path, data):
     """save json data
     Args:
         path (Path): path to json file
@@ -103,18 +103,19 @@ def save_json(path: Path, data: dict):
 
 
 @ensure_annotations
-def load_json(path: Path) -> ConfigBox:
+def load_json(path: Path):
     """load json files data
     Args:
         path (Path): path to json file
     Returns:
-        ConfigBox: data as class attributes instead of dict
+        Any : Data of the file 
     """
+
     with open(path) as f:
         content = json.load(f)
 
     logger.info(f"json file loaded succesfully from: {path}")
-    return ConfigBox(content)
+    return content
 
 
 @ensure_annotations
