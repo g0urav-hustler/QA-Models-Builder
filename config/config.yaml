@@ -1,6 +1,5 @@
 artifacts_root: artifacts
 
-
 data_ingestion:
   raw_data_dir: artifacts/raw_data
   web_data_dir: web_files
@@ -9,3 +8,9 @@ data_processing:
   raw_data_dir: artifacts/raw_data
   processed_data_dir: artifacts/processed_data
   split_data_dir: artifacts/split_data
+
+model_train:
+  split_data_dir: artifacts/split_data
+  save_model_dir: artifacts/models
+  
+
