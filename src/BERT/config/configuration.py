@@ -50,7 +50,6 @@ class ConfigurationManager:
             val_data_size= params.val_data_size
         )
 
-
         return data_processing_config
     
 
