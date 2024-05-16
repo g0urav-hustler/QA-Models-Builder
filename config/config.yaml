@@ -9,8 +9,9 @@ data_processing:
   processed_data_dir: artifacts/processed_data
   split_data_dir: artifacts/split_data
 
-model_train:
-  split_data_dir: artifacts/split_data
+train_model:
+  train_data_path: artifacts/split_data/train_data.json
+  val_data_path : artifacts/split_data/val_data.json
   save_model_dir: artifacts/models
   
 
