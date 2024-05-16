@@ -63,7 +63,7 @@ class DataPreprocessing():
         data_file_path = join_path(self.config.raw_data_dir, data_file)
 
 
-        df = pd.read_csv(data_file_path, nrows= 10)
+        df = pd.read_csv(data_file_path, nrows= 4)
 
 
         context_list = df[self.config.context_col].to_list()
@@ -82,12 +82,18 @@ class DataPreprocessing():
         
         processed_data = load_json(Path(join_path(self.config.processed_data_dir, "processed_data.json")))
 
-        train_range = int((100*self.config.train_data_size)/ len(processed_data))
-        val_range = int((100*self.config.val_data_size)/ len(processed_data))
+        print(len(processed_data))
+
+        train_range = int((self.config.train_data_size)* len(processed_data))
+        val_range = int((self.config.val_data_size)* len(processed_data))
+
+        print("train_range", train_range)
+        print("val_range", val_range)
 
         train_data = processed_data[:train_range]
         val_data = processed_data[-(val_range):]
-
+        print(len(train_data))
+        print(len(val_data))
         
         # save training data
         save_json(Path(join_path(self.config.split_data_dir, "train_data.json")), train_data)
