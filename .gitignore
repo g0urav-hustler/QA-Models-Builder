@@ -16,7 +16,7 @@ artifacts
 logs
 
 # uploaded_files
-uploaded_files
+web_files
 
 # data
 data
@@ -24,4 +24,3 @@ data
 # for personal 
 notes.txt
 
-params.yaml
