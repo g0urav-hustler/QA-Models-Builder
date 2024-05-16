@@ -1,7 +1,9 @@
 import os
 from src.BERT.constants import *
 from src.BERT.utils.common import read_yaml, create_directories
-from src.BERT.entity.config_entity import DataIngestionConfig, DataProcessing
+from src.BERT.entity.config_entity import (DataIngestionConfig, 
+                                           DataProcessing,
+                                           TrainModelConfig)
 
 
 class ConfigurationManager:
@@ -51,5 +53,24 @@ class ConfigurationManager:
         )
 
         return data_processing_config
+    
+    def get_train_model_config(self) -> TrainModelConfig:
+
+        config = self.config.train_model
+        params = self.params.model_params
+
+        train_model_config = TrainModelConfig(
+            train_data_path= config.train_data_path,
+            val_data_path= config.val_data_path,
+            save_model_dir= config.save_model_dir,
+
+            model_type = params.model_type,
+            model_name = params.model_name,
+            epochs = params.epochs,
+            train_batch_size = params.train_batch_size,
+            val_batch_size = params.val_batch_size
+        )
+
+        return train_model_config
     
 
