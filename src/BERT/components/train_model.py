@@ -1,3 +1,4 @@
+from src.BERT.utils.common import join_path
 from src.BERT.entity.config_entity import TrainModelConfig
 from simpletransformers.question_answering import QuestionAnsweringModel
 
@@ -5,6 +6,7 @@ class TrainModel:
     def __init__(self, config = TrainModelConfig):
         self.config = config
 
+        
     def train_model(self):
         config = self.config
 
@@ -27,4 +29,18 @@ class TrainModel:
         )
 
         model.train_model(config.train_data_path)
+
+    def get_eval_metrics(self):
+
+        pretrained_model_path = join_path(self.config.save_model_dir, self.config.model_type)
+
+        pretrained_model = QuestionAnsweringModel(
+            model_type = self.config.model_type,
+            model_name = pretrained_model_path,
+        )
+
+        evaluation_metric = pretrained_model.eval_model(eval_data = self.config.val_data_path)
+
+        return evaluation_metric
+        
 
