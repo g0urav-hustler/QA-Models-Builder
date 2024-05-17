@@ -17,6 +17,8 @@ class TrainModelPipeline:
 
         train_model.train_model()
 
+        evaluation_metric = train_model.get_eval_metrics()
+
 if __name__ == "__main__":
     try:
         logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
