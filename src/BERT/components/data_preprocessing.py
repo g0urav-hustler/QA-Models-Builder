@@ -82,18 +82,13 @@ class DataPreprocessing():
         
         processed_data = load_json(Path(join_path(self.config.processed_data_dir, "processed_data.json")))
 
-        print(len(processed_data))
+        
 
         train_range = int((self.config.train_data_size)* len(processed_data))
         val_range = int((self.config.val_data_size)* len(processed_data))
 
-        print("train_range", train_range)
-        print("val_range", val_range)
-
         train_data = processed_data[:train_range]
         val_data = processed_data[-(val_range):]
-        print(len(train_data))
-        print(len(val_data))
         
         # save training data
         save_json(Path(join_path(self.config.split_data_dir, "train_data.json")), train_data)
