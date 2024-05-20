@@ -1,17 +1,13 @@
 data_processing:
-  context_col : context
-  question_col: question
   answer_col: text
-  answer_start_col: answer_start
-
+  answer_start_col: None
+  context_col: context
+  question_col: question
   train_data_size: 0.8
-  val_data_size: 0.2
-
+  val_data_size: 0.1
 model_params:
-  model_type: bert
-  model_name: bert-base-cased
-  epochs: 2
-  train_batch_size : 8
+  epochs: 10
+  model_name: distilbert-base-cased
+  model_type: distilbert
+  train_batch_size: 4
   val_batch_size: 4
-  
-  
