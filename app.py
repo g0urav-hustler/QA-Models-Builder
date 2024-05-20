@@ -135,7 +135,7 @@ if uploaded_file is not None:
 
     }
 
-
+    print("submit_button", submitted)
     if submitted:
         folder = 'web_files'
         file_path = os.path.join(folder, "data_file.csv")
@@ -147,9 +147,24 @@ if uploaded_file is not None:
 
     button_col1, button_col2, button_col3, button_col4, button_col5 = st.columns(5)
     with button_col3:
-        if st.button("Train The Model"):
-            pipline_object = InvokePipeline()
-            pipline_object.main()
+        train_button = st.button("Train The Model")
+    if  train_button and not submitted:
+        print("train_button", train_button, submitted)
+        pipline_object = InvokePipeline()
+        model_result = pipline_object.main()
+
+        result_col1, result_col2 = st.columns(2)
+        
+        with result_col1:
+            st.write(params_data["model_params"])
+
+        with result_col2:
+            result_data = {"Configs": model_result.keys(), "Values": model_result.values()}
+            result_dataframe = pd.DataFrame.from_dict(result_data)
+            st.write(model_result)
+    elif train_button and submitted:
+        st.warning("Please Submit the parameters first")
+            
 
             
 
