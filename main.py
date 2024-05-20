@@ -34,21 +34,23 @@ class InvokePipeline:
             raise e
 
 
-        STAGE_NAME = "Train Model Stage"
+        # STAGE_NAME = "Train Model Stage"
 
-        try:
-            logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
-            obj = TrainModelPipeline()
-            obj.main()
-            logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
-        except Exception as e:
-            logger.exception(e)
-            raise e
+        # try:
+        #     logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
+        #     obj = TrainModelPipeline()
+        #     evaluation_metric = obj.main()
+        #     return evaluation_metric
+        #     logger.info(f">>>>>> stage {STAGE_NAME} completed <<<<<<\n\nx==========x")
+        # except Exception as e:
+        #     logger.exception(e)
+        #     raise e
         
 if __name__ == '__main__':
     try:
         obj = InvokePipeline()
-        obj.main()
+        result = obj.main()
+        print("Train Model results", result)
     except Exception as e:
         logger.exception(e)
         raise e
