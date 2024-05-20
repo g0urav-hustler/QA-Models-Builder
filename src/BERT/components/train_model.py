@@ -39,7 +39,7 @@ class TrainModel:
             model_name = pretrained_model_path,
         )
 
-        evaluation_metric = pretrained_model.eval_model(eval_data = self.config.val_data_path)
+        evaluation_metric, evaluation_text = pretrained_model.eval_model(eval_data = self.config.val_data_path)
 
         return evaluation_metric
         
