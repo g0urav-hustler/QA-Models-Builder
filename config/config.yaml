@@ -14,4 +14,6 @@ train_model:
   val_data_path : artifacts/split_data/val_data.json
   save_model_dir: artifacts/models
   
+model_eval:
+  save_model_dir: artivacts/models
 
