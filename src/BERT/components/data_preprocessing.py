@@ -62,17 +62,17 @@ class DataPreprocessing():
         data_file = os.listdir(self.config.raw_data_dir)[0]
         data_file_path = join_path(self.config.raw_data_dir, data_file)
 
-
         df = pd.read_csv(data_file_path, nrows= 4)
-
 
         context_list = df[self.config.context_col].to_list()
         question_list = df[self.config.question_col].to_list()
         answer_list = df[self.config.answer_col].to_list()
 
-        if self.config.answer_start_col != None:
+        if self.config.answer_start_col != 'None':
             answer_start_list = df[self.config.answer_start_col].to_list()
-
+        else:
+            answer_start_list = None
+        
         processed_data = self.create_json_dataset(context_list,question_list, answer_list, answer_start_list)
 
         save_json(Path(join_path(self.config.processed_data_dir, "processed_data.json")), processed_data)
@@ -81,8 +81,6 @@ class DataPreprocessing():
     def get_split_data(self):
         
         processed_data = load_json(Path(join_path(self.config.processed_data_dir, "processed_data.json")))
-
-        
 
         train_range = int((self.config.train_data_size)* len(processed_data))
         val_range = int((self.config.val_data_size)* len(processed_data))
