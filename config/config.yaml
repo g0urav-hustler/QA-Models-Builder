@@ -15,5 +15,5 @@ train_model:
   save_model_dir: artifacts/models
   
 model_eval:
-  save_model_dir: artivacts/models
+  save_model_dir: artifacts/models
 
