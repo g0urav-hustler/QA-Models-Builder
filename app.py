@@ -1,8 +1,21 @@
+import shutil
 import streamlit as st
 import os
+import time
 import yaml
 import pandas as pd
 from main import InvokePipeline
+
+
+@st.cache_data
+def compressed_model(model_path, zip_file_name):
+    for dirs in os.listdir(model_path):
+        if "checkpoint" in dirs:
+            shutil.rmtree(os.path.join(model_path,dirs))
+    shutil.make_archive(zip_file_name, "zip", model_path)
+    with open(zip_file_name +".zip", "rb") as fp:
+        return fp
+
 
 # page config
 st.set_page_config(page_title="QA-Model-Builder ", layout="wide",)
@@ -39,7 +52,7 @@ if uploaded_file is not None:
 
         # answer_column input 
         with col3:
-            answer_column = st.selectbox(label = "Select the answer columne", options = df_columns )
+            answer_column = st.selectbox(label = "Select the answer column", options = df_columns )
 
         # answer_start_column
         with col4: 
@@ -149,19 +162,44 @@ if uploaded_file is not None:
     with button_col3:
         train_button = st.button("Train The Model")
     if  train_button and not submitted:
-        print("train_button", train_button, submitted)
+        with st.status("Training Status", expanded=True) as status:
+            st.write("Data Loading.")
+            time.sleep(3)
+            st.write("Data Preprocessing")
+            time.sleep(2)
+            st.write("Training model ..")
+            time.sleep(5)
+            status.update(label="Model Trained Succesfully", state="complete", expanded=False)
+
+        # print("train_button", train_button, submitted)
+        # with st.spinner('Training your Model'):
+        #     time.sleep(5)   
         pipline_object = InvokePipeline()
         model_result = pipline_object.main()
-
+        
         result_col1, result_col2 = st.columns(2)
         
         with result_col1:
+            st.write("Model Parameters")
             st.write(params_data["model_params"])
 
         with result_col2:
             result_data = {"Configs": model_result.keys(), "Values": model_result.values()}
             result_dataframe = pd.DataFrame.from_dict(result_data)
-            st.write(model_result)
+            st.write("Result Model Metrics")
+            st.write(result_dataframe)
+        st.success('Done!')
+
+
+        
+        btn = st.download_button(
+              label="Download Train Model",
+              data=compressed_model(os.path.join("artifacts","models",model_type), model_type),
+              file_name=f"{model_type}.zip",
+              mime="application/octet-stream"
+              )
+
+
     elif train_button and submitted:
         st.warning("Please Submit the parameters first")
             
