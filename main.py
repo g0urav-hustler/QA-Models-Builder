@@ -32,6 +32,9 @@ class InvokePipeline:
         except Exception as e:
             logger.exception(e)
             raise e
+        
+        # for temporary execution
+        return {'correct': 0, 'similar': 1, 'incorrect': 2, 'eval_loss': -0.3109431862831116}
 
 
         # STAGE_NAME = "Train Model Stage"
