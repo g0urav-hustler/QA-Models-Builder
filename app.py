@@ -7,14 +7,14 @@ import pandas as pd
 from main import InvokePipeline
 
 
-@st.cache_data
-def compressed_model(model_path, zip_file_name):
+
+def compressing_model(model_path, zip_file_name):
     for dirs in os.listdir(model_path):
         if "checkpoint" in dirs:
             shutil.rmtree(os.path.join(model_path,dirs))
+
     shutil.make_archive(zip_file_name, "zip", model_path)
-    with open(zip_file_name +".zip", "rb") as fp:
-        return fp
+    
 
 
 # page config
@@ -188,16 +188,18 @@ if uploaded_file is not None:
             result_dataframe = pd.DataFrame.from_dict(result_data)
             st.write("Result Model Metrics")
             st.write(result_dataframe)
+
+        compressing_model(os.path.join("artifacts","models",model_type), model_type)
         st.success('Done!')
 
 
-        
-        btn = st.download_button(
-              label="Download Train Model",
-              data=compressed_model(os.path.join("artifacts","models",model_type), model_type),
-              file_name=f"{model_type}.zip",
-              mime="application/octet-stream"
-              )
+        with open(f"{model_type}.zip", "rb") as fp:
+            btn = st.download_button(
+                label="Download Train Model",
+                data=fp,
+                file_name=f"{model_type}.zip",
+                mime="application/octet-stream"
+                )
 
 
     elif train_button and submitted:
@@ -207,6 +209,6 @@ if uploaded_file is not None:
             
 
 
+st.divider() 
 
-st.markdown("Thank You")
-
+st.caption("Made by Gourav Chouhan ")
