@@ -7,7 +7,6 @@ import pandas as pd
 from main import InvokePipeline
 
 
-
 def compressing_model(model_path, zip_file_name):
     for dirs in os.listdir(model_path):
         if "checkpoint" in dirs:
@@ -15,7 +14,7 @@ def compressing_model(model_path, zip_file_name):
 
     shutil.make_archive(zip_file_name, "zip", model_path)
     
-
+model_result = None
 
 # page config
 st.set_page_config(page_title="QA-Model-Builder ", layout="wide",)
@@ -148,7 +147,6 @@ if uploaded_file is not None:
 
     }
 
-    print("submit_button", submitted)
     if submitted:
         folder = 'web_files'
         file_path = os.path.join(folder, "data_file.csv")
@@ -159,56 +157,68 @@ if uploaded_file is not None:
             yaml.dump(params_data, outfile, default_flow_style=False)
 
     button_col1, button_col2, button_col3, button_col4, button_col5 = st.columns(5)
-    with button_col3:
-        train_button = st.button("Train The Model")
-    if  train_button and not submitted:
-        with st.status("Training Status", expanded=True) as status:
-            st.write("Data Loading.")
-            time.sleep(3)
-            st.write("Data Preprocessing")
-            time.sleep(2)
-            st.write("Training model ..")
-            time.sleep(5)
-            status.update(label="Model Trained Succesfully", state="complete", expanded=False)
+    if os.path.isfile("params.yaml"):
+        with button_col3:
+            train_button = st.button("Train The Model")
+        if train_button and not submitted:
+            with st.status("Training Status", expanded=True) as status:
+                st.write("Data Loading.")
+                time.sleep(3)
+                st.write("Data Preprocessing")
+                time.sleep(2)
+                st.write("Training model..")
+                time.sleep(5)
+                pipline_object = InvokePipeline()
+                model_result = pipline_object.main()
 
-        # print("train_button", train_button, submitted)
-        # with st.spinner('Training your Model'):
-        #     time.sleep(5)   
-        pipline_object = InvokePipeline()
-        model_result = pipline_object.main()
+                shutil.copytree("/home/gourav/ML/QA_Models_Builder/logs/bert", os.path.join("artifacts","models", model_type))
+                compressing_model(os.path.join("artifacts","models",model_type), model_type)
+                status.update(label="Model Trained Succesfully", state="complete", expanded=False)
+ 
+            st.success('Done!')
+
         
-        result_col1, result_col2 = st.columns(2)
-        
-        with result_col1:
-            st.write("Model Parameters")
-            st.write(params_data["model_params"])
+    if os.path.isdir(os.path.join("artifacts","models",model_type)):
 
-        with result_col2:
-            result_data = {"Configs": model_result.keys(), "Values": model_result.values()}
-            result_dataframe = pd.DataFrame.from_dict(result_data)
-            st.write("Result Model Metrics")
-            st.write(result_dataframe)
+        if model_result != None:
 
-        compressing_model(os.path.join("artifacts","models",model_type), model_type)
-        st.success('Done!')
+            result_col1, result_col2 = st.columns(2)
+                
+            with result_col1:
+                st.write("Model Parameters")
+                st.write(params_data["model_params"])
+
+            with result_col2:
+                # result_data = {"Configs": model_result.keys(), "Values": model_result.values()}
+                # result_dataframe = pd.DataFrame.from_dict(result_data)
+                # st.write("Result Model Metrics")
+                st.write(model_result)
+                    
+
+        st.write("Try Trained Model Output")
+
+        title = st.text_input("Try any question ",None, placeholder= "Write question here..")
+        if title:
+            st.write("Answer:")
+            st.write("The current movie title is", title)
 
 
         with open(f"{model_type}.zip", "rb") as fp:
             btn = st.download_button(
-                label="Download Train Model",
+                label="Download Trained Model",
                 data=fp,
                 file_name=f"{model_type}.zip",
                 mime="application/octet-stream"
                 )
-
-
-    elif train_button and submitted:
-        st.warning("Please Submit the parameters first")
             
-
+footer = """<style>.footer {position: fixed;left: 0;bottom: 0;width: 100%;background-color: #000;color: white;text-align: center;}
+</style><div class='footer'><p>Made By Gourav Chouhan</p></div>"""
+st.markdown(footer, unsafe_allow_html=True)
             
+# footer_html = """<div style='text-align: center;'>
+#   <p>Developed with ❤️ by Gourav Chouhan </p>
+# </div>"""
+# st.markdown(footer_html, unsafe_allow_html=True)
+# st.divider() 
 
-
-st.divider() 
-
-st.caption("Made by Gourav Chouhan ")
+# st.caption("Made by Gourav Chouhan ")
